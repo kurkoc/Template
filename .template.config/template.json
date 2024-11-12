@@ -11,57 +11,37 @@
     "sourceName": "Sample",
 	"preferNameDirectory": true,
     "symbols": {
-        "Framework": {
-            "choices": [
-                {
-                    "choice": "net5",
-                    "description": "Target .net 5"
-                },
-				                {
-                    "choice": "net6",
-                    "description": "Target .net 6"
-                },
-				                {
-                    "choice": "net7",
-                    "description": "Target .net 7"
-                },
-				                {
-                    "choice": "net8",
-                    "description": "Target .net 8"
-                }
-            ],
-            "datatype": "choice",
-            "defaultValue": "net8",
-            "description": "The target framework for the project.",
-            "replaces": "{TargetFramework}",
-            "type": "parameter"
-        },
         "EnableSwagger": {
 			"type": "parameter",
             "datatype": "bool",
             "description": "enables swagger support",
 			"defaultValue": "false"
         },
-		"EFDatabase": {
+		"DBProvider": {
 			"type": "parameter",
-            "choices": [
+            "choices": 
+            [
                 {
-                    "choice": "Sql Server",
+                    "choice": "SqlServer",
                     "description": "Sql Server"
                 },
-				                {
+                {
                     "choice": "Postgresql",
                     "description": "Postgresql"
-                },
-				                {
-                    "choice": "Sqlite",
-                    "description": "Sqlite"
                 }
             ],
             "datatype": "choice",
-            "defaultValue": "Sql Server",
+            "defaultValue": "SqlServer",
             "description": "The database settings"
-        }
+        },
+        "UseSqlServer": {
+        "type": "computed",
+        "value": "(DBProvider == \"SqlServer\")"
+      },
+        "UsePostgresql": {
+        "type": "computed",
+        "value": "(DBProvider == \"Postgresql\")"
+      }
     },
     "tags": {
         "language": "C#",
