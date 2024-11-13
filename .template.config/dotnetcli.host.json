@@ -6,6 +6,10 @@
             "longName": "swagger",
             "shortName": "sw"
         },
+      "EnableJwt": {
+        "longName": "EnableJwt",
+        "shortName": "jwt"
+      },
 		"DBProvider": {
 			"longName": "database",
             "shortName": "db"

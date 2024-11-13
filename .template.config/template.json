@@ -11,12 +11,19 @@
     "sourceName": "TemplateSolution",
     "preferNameDirectory": true,
     "symbols": {
+        "EnableJwt": {
+        "displayName": "Enable Jwt",
+        "type": "parameter",
+        "datatype": "bool",
+        "description": "enables JWT support",
+        "defaultValue": "true"
+      },
         "EnableSwagger": {
             "displayName": "Enable Swagger",
             "type": "parameter",
             "datatype": "bool",
             "description": "enables swagger support",
-            "defaultValue": "false"
+            "defaultValue": "true"
         },
         "DBProvider": {
             "displayName": "Database Provider",
@@ -60,7 +67,13 @@
                     "exclude": [
                         "src/**/OpenApi/**/*"
                     ]
-                }
+                },
+              {
+                "condition": "(!EnableJwt)",
+                "exclude": [
+                  "src/**/Authentication/**/*"
+                ]
+              }
             ]
         }
     ],

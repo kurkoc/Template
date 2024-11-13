@@ -5,17 +5,33 @@
 
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.DependencyInjection.Abstractions" />
-    <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
-    <PackageReference Include="Swashbuckle.AspNetCore" />
     <PackageReference Include="Microsoft.EntityFrameworkCore" />
+      <PackageReference Include="Microsoft.Extensions.Hosting.Abstractions" />
   </ItemGroup>
 
-    <ItemGroup Condition="'$(UsePostgresql)' == 'true'">
+    <!--#if(EnableJwt) -->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.Authentication.JwtBearer" />
+    </ItemGroup>
+    <!--#endif -->
+    
+    <!--#if(EnableSwagger) -->
+    <ItemGroup>
+        <PackageReference Include="Microsoft.AspNetCore.OpenApi" />
+        <PackageReference Include="Swashbuckle.AspNetCore" />
+    </ItemGroup>
+    <!--#endif -->
+
+    <!--#if(UsePostgresql) -->
+    <ItemGroup>
         <PackageReference Include="Npgsql.EntityFrameworkCore.PostgreSQL" />
     </ItemGroup>
+    <!--#endif -->
 
-    <ItemGroup Condition="'$(UseSqlServer)' == 'true'">
+    <!--#if(UseSqlServer) -->
+    <ItemGroup>
         <PackageReference Include="Microsoft.EntityFrameworkCore.SqlServer" />
     </ItemGroup>
+    <!--#endif -->
     
 </Project>
