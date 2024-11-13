@@ -8,5 +8,9 @@
     <PackageReference Include="Swashbuckle.AspNetCore" />
   </ItemGroup>
 
+  <ItemGroup>
+    <ProjectReference Include="..\TemplateSolution.Infrastructure\TemplateSolution.Infrastructure.csproj" />
+  </ItemGroup>
+
 
 </Project>

@@ -8,19 +8,18 @@
     "identity": "com.companyname.projecttemplate",
     "name": "kurkoc template",
     "shortName": "kurkoctemplate",
-    "sourceName": "Sample",
-	"preferNameDirectory": true,
+    "sourceName": "TemplateSolution",
+    "preferNameDirectory": true,
     "symbols": {
         "EnableSwagger": {
-			"type": "parameter",
+            "type": "parameter",
             "datatype": "bool",
             "description": "enables swagger support",
-			"defaultValue": "false"
+            "defaultValue": "false"
         },
-		"DBProvider": {
-			"type": "parameter",
-            "choices": 
-            [
+        "DBProvider": {
+            "type": "parameter",
+            "choices": [
                 {
                     "choice": "SqlServer",
                     "description": "Sql Server"
@@ -35,14 +34,24 @@
             "description": "The database settings"
         },
         "UseSqlServer": {
-        "type": "computed",
-        "value": "(DBProvider == \"SqlServer\")"
-      },
+            "type": "computed",
+            "value": "(DBProvider == \"SqlServer\")"
+        },
         "UsePostgresql": {
-        "type": "computed",
-        "value": "(DBProvider == \"Postgresql\")"
-      }
+            "type": "computed",
+            "value": "(DBProvider == \"Postgresql\")"
+        }
     },
+    "sources": [
+        {
+            "modifiers": [
+                {
+                    "condition": "(!EnableSwagger)",
+                    "exclude": ["src/**/OpenApi/**/*"]
+                }
+            ]
+        }
+    ],
     "tags": {
         "language": "C#",
         "type": "solution"
