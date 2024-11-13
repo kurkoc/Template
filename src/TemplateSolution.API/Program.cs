@@ -1,12 +1,17 @@
 #if (EnableSwagger)
-using Sample.Infrastructure.OpenApi;
+using TemplateSolution.Infrastructure.OpenApi;
 #endif
+
+using TemplateSolution.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
 #if (EnableSwagger)
 builder.Services.AddApiSwagger();
 #endif
+
+
+builder.Services.AddDatabase(builder.Configuration);
 
 var app = builder.Build();
 
