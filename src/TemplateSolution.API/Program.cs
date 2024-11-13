@@ -19,6 +19,6 @@ var app = builder.Build();
 app.UseApiSwagger();
 #endif
 
-app.MapGet("/", () => "it works");
+app.MapGet("/", () => "it works - CurrentAppYear");
 
 app.Run();

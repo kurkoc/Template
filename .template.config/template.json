@@ -12,26 +12,28 @@
     "preferNameDirectory": true,
     "symbols": {
         "EnableSwagger": {
+            "displayName": "Enable Swagger",
             "type": "parameter",
             "datatype": "bool",
             "description": "enables swagger support",
             "defaultValue": "false"
         },
         "DBProvider": {
+            "displayName": "Database Provider",
             "type": "parameter",
             "choices": [
                 {
                     "choice": "SqlServer",
-                    "description": "Sql Server"
+                    "displayName": "Sql Server"
                 },
                 {
                     "choice": "Postgresql",
-                    "description": "Postgresql"
+                    "displayName": "Postgresql"
                 }
             ],
             "datatype": "choice",
             "defaultValue": "SqlServer",
-            "description": "The database settings"
+            "description": "Database Provider"
         },
         "UseSqlServer": {
             "type": "computed",
@@ -40,6 +42,14 @@
         "UsePostgresql": {
             "type": "computed",
             "value": "(DBProvider == \"Postgresql\")"
+        },
+        "AppYear": {
+            "type": "generated",
+            "generator": "now",
+            "replaces": "CurrentAppYear",
+            "parameters": {
+                "format": "yyyy"
+            }
         }
     },
     "sources": [
@@ -47,7 +57,9 @@
             "modifiers": [
                 {
                     "condition": "(!EnableSwagger)",
-                    "exclude": ["src/**/OpenApi/**/*"]
+                    "exclude": [
+                        "src/**/OpenApi/**/*"
+                    ]
                 }
             ]
         }
@@ -55,5 +67,31 @@
     "tags": {
         "language": "C#",
         "type": "solution"
+    },
+    "SpecialCustomOperations": {
+        "**/*.md": {
+            "operations": [
+                {
+                    "type": "conditional",
+                    "configuration": {
+                        "if": [
+                            "---#if"
+                        ],
+                        "else": [
+                            "---#else"
+                        ],
+                        "elseif": [
+                            "---#elseif",
+                            "---#elif"
+                        ],
+                        "endif": [
+                            "---#endif"
+                        ],
+                        "trim": "true",
+                        "wholeLine": "true"
+                    }
+                }
+            ]
+        }
     }
 }
