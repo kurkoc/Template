@@ -13,7 +13,7 @@ var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddApplication();
 
 #if (EnableSwagger)
-builder.Services.AddOpenApi();
+builder.Services.AddOpenApiDocument();
 #endif
 
 #if (EnableJwt)

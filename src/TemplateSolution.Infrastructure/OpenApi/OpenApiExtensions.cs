@@ -11,7 +11,7 @@ namespace TemplateSolution.Infrastructure.OpenApi;
 
 public static class OpenApiExtensions
 {
-    public static IServiceCollection AddOpenApi(this IServiceCollection services)
+    public static IServiceCollection AddOpenApiDocument(this IServiceCollection services)
     {
         services.AddOpenApi("doc", options => {
 
