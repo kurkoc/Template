@@ -10,64 +10,45 @@ public static class OpenApiExtensions
 {
     public static IServiceCollection AddApiSwagger(this IServiceCollection services)
     {
-        services.AddEndpointsApiExplorer();
-        services.AddSwaggerGen(options =>
-        {
-            options.SwaggerDoc("v1", new OpenApiInfo
-            {
-                Version = "v1",
-                Title = "Geoproxy API",
-                Description = "A proxy for managing geoservers",
-                TermsOfService = new Uri("https://example.com/terms"),
-                Contact = new OpenApiContact
-                {
-                    Name = "Example Contact",
-                    Url = new Uri("https://example.com/contact")
-                },
-                License = new OpenApiLicense
-                {
-                    Name = "Example License",
-                    Url = new Uri("https://example.com/license")
-                }
-            });
+        services.AddOpenApi("doc", options => {
 
-            options.AddSecurityDefinition("Bearer", new OpenApiSecurityScheme
+            options.AddDocumentTransformer((document, context, cancellationToken) =>
             {
-                In = ParameterLocation.Header,
-                Description = "Please enter token",
-                Name = "Authorization",
-                Type = SecuritySchemeType.Http,
-                BearerFormat = "JWT",
-                Scheme = "bearer"
-            });
-
-            options.AddSecurityRequirement(new OpenApiSecurityRequirement
+                document.Info = new()
                 {
+                    Title = "Template API",
+                    Version = "v1",
+                    Description = "API for templating.",
+                    TermsOfService = new Uri("https://example.com/terms"),
+                    Contact = new OpenApiContact
                     {
-                        new OpenApiSecurityScheme
-                        {
-                            Reference = new OpenApiReference
-                            {
-                                Type=ReferenceType.SecurityScheme,
-                                Id="Bearer"
-                            }
-                        },
-                        []
+                        Name = "Example Contact",
+                        Url = new Uri("https://example.com/contact")
+                    },
+                    License = new OpenApiLicense
+                    {
+                        Name = "Example License",
+                        Url = new Uri("https://example.com/license")
                     }
-                });
+                };
+
+
+                return Task.CompletedTask;
+            });
+
+            options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
         });
 
         return services;
     }
-
-
-    public static IApplicationBuilder UseApiSwagger(this IApplicationBuilder app)
+    public static IApplicationBuilder UseApiSwagger(this WebApplication app)
     {
-        app.UseSwagger();
+        app.MapOpenApi();
         app.UseSwaggerUI(options =>
         {
-            options.DocExpansion(DocExpansion.List);
+            options.SwaggerEndpoint("/openapi/doc.json", "v1");
             options.DisplayRequestDuration();
+            options.DocExpansion(DocExpansion.List);
         });
 
         return app;
