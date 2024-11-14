@@ -2,6 +2,8 @@
 using Microsoft.Extensions.DependencyInjection;
 using System.Reflection;
 
+using TemplateSolution.Application.Services;
+
 namespace TemplateSolution.Application;
 
 public static  class ServiceCollectionExtensions
@@ -19,9 +21,21 @@ public static  class ServiceCollectionExtensions
         return services;
     }
 
+    public static IServiceCollection AddBusinessServices(this IServiceCollection services)
+    {
+        services.Scan(scan => scan
+            .FromAssemblyOf<IBusinessService>()
+            .AddClasses(classes => classes.AssignableTo<IBusinessService>())
+            .AsImplementedInterfaces(type => type != typeof(IBusinessService))
+            .WithScopedLifetime());
+
+        return services;
+    }
+
 
     public static IServiceCollection AddApplication(this IServiceCollection services) =>
         services
+            .AddBusinessServices()
             .AddAutomapper()
             .AddValidation();
 }

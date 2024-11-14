@@ -5,12 +5,15 @@ using TemplateSolution.Infrastructure.OpenApi;
 using TemplateSolution.Infrastructure.Authentication;
 #endif
 
+using TemplateSolution.Application;
 using TemplateSolution.Infrastructure.Persistence;
 
 var builder = WebApplication.CreateBuilder(args);
 
+builder.Services.AddApplication();
+
 #if (EnableSwagger)
-builder.Services.AddApiSwagger();
+builder.Services.AddOpenApi();
 #endif
 
 #if (EnableJwt)
@@ -25,7 +28,7 @@ app.UseJwt();
 #endif
 
 #if (EnableSwagger)
-app.UseApiSwagger();
+app.UseOpenApiSwagger();
 #endif
 
 app.MapGet("/", () => "it works - CurrentAppYear");

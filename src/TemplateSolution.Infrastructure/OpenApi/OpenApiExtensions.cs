@@ -1,4 +1,7 @@
-﻿using Microsoft.AspNetCore.Builder;
+﻿using Microsoft.AspNetCore.Authentication.JwtBearer;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.OpenApi;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.OpenApi.Models;
 
@@ -8,7 +11,7 @@ namespace TemplateSolution.Infrastructure.OpenApi;
 
 public static class OpenApiExtensions
 {
-    public static IServiceCollection AddApiSwagger(this IServiceCollection services)
+    public static IServiceCollection AddOpenApi(this IServiceCollection services)
     {
         services.AddOpenApi("doc", options => {
 
@@ -32,16 +35,15 @@ public static class OpenApiExtensions
                     }
                 };
 
-
                 return Task.CompletedTask;
             });
 
-            options.AddDocumentTransformer<BearerSecuritySchemeTransformer>();
+            options.UseBearer();
         });
 
         return services;
     }
-    public static IApplicationBuilder UseApiSwagger(this WebApplication app)
+    public static IApplicationBuilder UseOpenApiSwagger(this WebApplication app)
     {
         app.MapOpenApi();
         app.UseSwaggerUI(options =>
@@ -52,5 +54,45 @@ public static class OpenApiExtensions
         });
 
         return app;
+    }
+    private static OpenApiOptions UseBearer(this OpenApiOptions options)
+    {
+        var scheme = new OpenApiSecurityScheme
+        {
+            Type = SecuritySchemeType.Http,
+            Name = JwtBearerDefaults.AuthenticationScheme,
+            Scheme = JwtBearerDefaults.AuthenticationScheme,
+            In = ParameterLocation.Header,
+            BearerFormat = "Json Web Token",
+            Reference = new()
+            {
+                Type = ReferenceType.SecurityScheme,
+                Id = JwtBearerDefaults.AuthenticationScheme,
+            }
+        };
+
+        options.AddDocumentTransformer((document, context, ct) =>
+        {
+            var requirements = new Dictionary<string, OpenApiSecurityScheme>
+            {
+                [JwtBearerDefaults.AuthenticationScheme] = scheme
+            };
+            document.Components ??= new OpenApiComponents();
+            document.Components.SecuritySchemes = requirements;
+
+            return Task.CompletedTask;
+        });
+
+        options.AddOperationTransformer((operation, context, ct) =>
+        {
+            if (context.Description.ActionDescriptor.EndpointMetadata.OfType<IAuthorizeData>().Any())
+            {
+                operation.Security = [new() { [scheme] = [] }];
+            }
+
+            return Task.CompletedTask;
+        });
+
+        return options;
     }
 }

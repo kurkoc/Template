@@ -4,6 +4,7 @@
   </PropertyGroup>
 
   <ItemGroup>
+    <ProjectReference Include="..\TemplateSolution.Application\TemplateSolution.Application.csproj" />
     <ProjectReference Include="..\TemplateSolution.Infrastructure\TemplateSolution.Infrastructure.csproj" />
   </ItemGroup>
 
