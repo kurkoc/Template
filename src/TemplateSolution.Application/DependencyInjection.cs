@@ -6,7 +6,7 @@ using TemplateSolution.Application.Services;
 
 namespace TemplateSolution.Application;
 
-public static  class ServiceCollectionExtensions
+public static  class DependencyInjection
 {
     public static IServiceCollection AddAutomapper(this IServiceCollection services)
     {

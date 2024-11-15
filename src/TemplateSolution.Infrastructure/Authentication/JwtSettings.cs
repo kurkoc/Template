@@ -1,6 +1,8 @@
+using TemplateSolution.Infrastructure.Configuration;
+
 namespace TemplateSolution.Infrastructure.Authentication;
 
-public class JwtSettings
+public class JwtSettings : IAppSettings
 {
     public string SecretKey { get; set; }
     public string Issuer { get; set; }

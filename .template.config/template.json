@@ -1,110 +1,136 @@
 {
-    "$schema": "http://json.schemastore.org/template",
-    "author": "Kursad Koc",
-    "classifications": [
-        "Web",
-        "Solution"
-    ],
-    "identity": "com.companyname.projecttemplate",
-    "name": "kurkoc template",
-    "shortName": "kurkoctemplate",
-    "sourceName": "TemplateSolution",
-    "preferNameDirectory": true,
-    "symbols": {
-        "EnableJwt": {
-        "displayName": "Enable Jwt",
-        "type": "parameter",
-        "datatype": "bool",
-        "description": "enables JWT support",
-        "defaultValue": "true"
-      },
-        "EnableSwagger": {
-            "displayName": "Enable Swagger",
-            "type": "parameter",
-            "datatype": "bool",
-            "description": "enables swagger support",
-            "defaultValue": "true"
-        },
-        "DBProvider": {
-            "displayName": "Database Provider",
-            "type": "parameter",
-            "choices": [
-                {
-                    "choice": "SqlServer",
-                    "displayName": "Sql Server"
-                },
-                {
-                    "choice": "Postgresql",
-                    "displayName": "Postgresql"
-                }
-            ],
-            "datatype": "choice",
-            "defaultValue": "SqlServer",
-            "description": "Database Provider"
-        },
-        "UseSqlServer": {
-            "type": "computed",
-            "value": "(DBProvider == \"SqlServer\")"
-        },
-        "UsePostgresql": {
-            "type": "computed",
-            "value": "(DBProvider == \"Postgresql\")"
-        },
-        "AppYear": {
-            "type": "generated",
-            "generator": "now",
-            "replaces": "CurrentAppYear",
-            "parameters": {
-                "format": "yyyy"
-            }
-        }
+  "$schema": "http://json.schemastore.org/template",
+  "author": "Kursad Koc",
+  "classifications": [
+    "Web",
+    "Solution"
+  ],
+  "identity": "com.companyname.projecttemplate",
+  "name": "kurkoc template",
+  "shortName": "kurkoctemplate",
+  "sourceName": "TemplateSolution",
+  "preferNameDirectory": true,
+  "symbols": {
+    "EnableJwt": {
+      "displayName": "Enable Jwt",
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "enables JWT support",
+      "defaultValue": "true"
     },
-    "sources": [
+    "EnableOpenApi": {
+      "displayName": "Enable OpenApi",
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "enables OpenApi support",
+      "defaultValue": "true"
+    },
+    "EnableMinio": {
+      "displayName": "Enable Minio",
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "enables minio support",
+      "defaultValue": "false"
+    },
+    "EnableCors": {
+      "displayName": "Enable Cors",
+      "type": "parameter",
+      "datatype": "bool",
+      "description": "enables Cors support",
+      "defaultValue": "true"
+    },
+    "DBProvider": {
+      "displayName": "Database Provider",
+      "type": "parameter",
+      "choices": [
         {
-            "modifiers": [
-                {
-                    "condition": "(!EnableSwagger)",
-                    "exclude": [
-                        "src/**/OpenApi/**/*"
-                    ]
-                },
-              {
-                "condition": "(!EnableJwt)",
-                "exclude": [
-                  "src/**/Authentication/**/*"
-                ]
-              }
-            ]
+          "choice": "SqlServer",
+          "displayName": "Sql Server"
+        },
+        {
+          "choice": "Postgresql",
+          "displayName": "Postgresql"
         }
-    ],
-    "tags": {
-        "language": "C#",
-        "type": "solution"
+      ],
+      "datatype": "choice",
+      "defaultValue": "SqlServer",
+      "description": "Database Provider"
     },
-    "SpecialCustomOperations": {
-        "**/*.md": {
-            "operations": [
-                {
-                    "type": "conditional",
-                    "configuration": {
-                        "if": [
-                            "---#if"
-                        ],
-                        "else": [
-                            "---#else"
-                        ],
-                        "elseif": [
-                            "---#elseif",
-                            "---#elif"
-                        ],
-                        "endif": [
-                            "---#endif"
-                        ],
-                        "trim": "true",
-                        "wholeLine": "true"
-                    }
-                }
-            ]
-        }
+    "UseSqlServer": {
+      "type": "computed",
+      "value": "(DBProvider == \"SqlServer\")"
+    },
+    "UsePostgresql": {
+      "type": "computed",
+      "value": "(DBProvider == \"Postgresql\")"
+    },
+    "AppYear": {
+      "type": "generated",
+      "generator": "now",
+      "replaces": "CurrentAppYear",
+      "parameters": {
+        "format": "yyyy"
+      }
     }
+  },
+  "sources": [
+    {
+      "modifiers": [
+        {
+          "condition": "(!EnableOpenApi)",
+          "exclude": [
+            "src/**/OpenApi/**/*"
+          ]
+        },
+        {
+          "condition": "(!EnableJwt)",
+          "exclude": [
+            "src/**/Authentication/**/*"
+          ]
+        },
+        {
+          "condition": "(!EnableMinio)",
+          "exclude": [
+            "src/**/Storage/**/*"
+          ]
+        },
+        {
+          "condition": "(!EnableCors)",
+          "exclude": [
+            "src/**/Cors/**/*"
+          ]
+        }
+      ]
+    }
+  ],
+  "tags": {
+    "language": "C#",
+    "type": "solution"
+  },
+  "SpecialCustomOperations": {
+    "**/*.md": {
+      "operations": [
+        {
+          "type": "conditional",
+          "configuration": {
+            "if": [
+              "---#if"
+            ],
+            "else": [
+              "---#else"
+            ],
+            "elseif": [
+              "---#elseif",
+              "---#elif"
+            ],
+            "endif": [
+              "---#endif"
+            ],
+            "trim": "true",
+            "wholeLine": "true"
+          }
+        }
+      ]
+    }
+  }
 }
