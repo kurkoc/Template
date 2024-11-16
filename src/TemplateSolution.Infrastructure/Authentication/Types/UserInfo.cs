@@ -1,4 +1,4 @@
-namespace TemplateSolution.Infrastructure.Authentication;
+namespace TemplateSolution.Infrastructure.Authentication.Types;
 
 public class UserInfo
 {

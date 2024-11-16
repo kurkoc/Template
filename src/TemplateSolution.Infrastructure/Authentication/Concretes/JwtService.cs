@@ -5,6 +5,7 @@ using System.Text;
 using Microsoft.IdentityModel.Tokens;
 
 using TemplateSolution.Infrastructure.Authentication.Abstractions;
+using TemplateSolution.Infrastructure.Authentication.Types;
 
 namespace TemplateSolution.Infrastructure.Authentication.Concretes;
 

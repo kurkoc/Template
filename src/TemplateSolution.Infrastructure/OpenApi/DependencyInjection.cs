@@ -9,7 +9,7 @@ using Swashbuckle.AspNetCore.SwaggerUI;
 
 namespace TemplateSolution.Infrastructure.OpenApi;
 
-public static class OpenApiExtensions
+public static class DependencyInjection
 {
     public static IServiceCollection AddOpenApiDocument(this IServiceCollection services)
     {
@@ -19,7 +19,7 @@ public static class OpenApiExtensions
             {
                 document.Info = new()
                 {
-                    Title = "Template API",
+                    Title = "Template Solution API",
                     Version = "v1",
                     Description = "API for templating.",
                     TermsOfService = new Uri("https://example.com/terms"),

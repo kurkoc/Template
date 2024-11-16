@@ -8,10 +8,11 @@ using Microsoft.IdentityModel.Tokens;
 
 using TemplateSolution.Infrastructure.Authentication.Abstractions;
 using TemplateSolution.Infrastructure.Authentication.Concretes;
+using TemplateSolution.Infrastructure.Authentication.Types;
 
 namespace TemplateSolution.Infrastructure.Authentication;
 
-public static class ServiceCollectionExtensions
+public static class DependencyInjection
 {
     public static IServiceCollection AddJwtToken(this IServiceCollection services, IConfiguration configuration)
     {

@@ -5,7 +5,7 @@ using Microsoft.Extensions.Hosting;
 
 namespace TemplateSolution.Infrastructure.Cors;
 
-public static class ServiceCollectionExtensions
+public static class DependencyInjection
 {
     private const string DevPolicy = nameof(DevPolicy);
     private const string CorsPolicy = nameof(CorsPolicy);

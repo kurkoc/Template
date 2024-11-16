@@ -5,13 +5,14 @@ using Microsoft.Extensions.DependencyInjection;
 
 namespace TemplateSolution.Infrastructure.Configuration;
 
-public static class ServiceCollectionExtensions
+public static class DependencyInjection
 {
     public static void AddConfigurations(this IServiceCollection services, IConfiguration configuration)
     {
         var assembly = Assembly.GetExecutingAssembly();
         IEnumerable<Type> settingTypes = assembly.GetTypes()
-            .Where(type => typeof(IAppSettings).IsAssignableFrom(type) && type.IsClass);
+            .Where(type => typeof(IAppSettings).IsAssignableFrom(type) 
+                           && type is { IsClass: true, IsAbstract: false });
         
         foreach (Type type in settingTypes)
         {

@@ -3,6 +3,7 @@ using System.Security.Claims;
 using Microsoft.AspNetCore.Http;
 
 using TemplateSolution.Infrastructure.Authentication.Abstractions;
+using TemplateSolution.Infrastructure.Authentication.Types;
 
 namespace TemplateSolution.Infrastructure.Authentication.Concretes;
 
