@@ -16,7 +16,7 @@
     </ItemGroup>
     <!--#endif -->
 
-    <!--#if(EnableSwagger) -->
+    <!--#if(EnableOpenApi) -->
     <ItemGroup>
         <PackageReference Include="Microsoft.AspNetCore.OpenApi"/>
         <PackageReference Include="Swashbuckle.AspNetCore"/>

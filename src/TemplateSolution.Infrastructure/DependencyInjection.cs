@@ -25,39 +25,33 @@ public static class DependencyInjection
             .AddDatabase(configuration)
             .AddConfigurations(configuration);
 
-#if (EnableJwt)
-services.AddJwtToken(configuration);
-#endif
-        
-#if (EnableMinio)
-services.AddMinioStorageService(configuration);
-#endif
-
-#if (EnableOpenApi)
-services.AddOpenApiDocument();
-#endif
-
-#if (EnableCors)
-services.AddCorsPolicy(configuration);
-#endif
+        #if (EnableJwt)
+        services.AddJwtToken(configuration);
+        #endif
+        #if (EnableMinio)
+        services.AddMinioStorageService(configuration);
+        #endif
+        #if (EnableOpenApi)
+        services.AddOpenApiDocument();
+        #endif
+        #if (EnableCors)
+        services.AddCorsPolicy(configuration);
+        #endif
         
         return services;
     }
 
     public static WebApplication UseInfrastructure(this WebApplication app)
     {
-        
-#if (EnableCors)
-app.UseCorsPolicy(configuration);
-#endif
-
-#if (EnableJwt)
-app.UseJwt();
-#endif
-
-#if (EnableOpenApi)
-app.UseOpenApiSwagger();
-#endif
+        #if (EnableCors)
+        app.UseCorsPolicy();
+        #endif
+        #if (EnableJwt)
+        app.UseJwt();
+        #endif
+        #if (EnableOpenApi)
+        app.UseOpenApiSwagger();
+        #endif
         return app;
     }
 }

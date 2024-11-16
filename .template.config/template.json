@@ -39,30 +39,30 @@
       "description": "enables Cors support",
       "defaultValue": "true"
     },
-    "DBProvider": {
+    "DbProvider": {
       "displayName": "Database Provider",
       "type": "parameter",
       "choices": [
         {
-          "choice": "SqlServer",
+          "choice": "sqlserver",
           "displayName": "Sql Server"
         },
         {
-          "choice": "Postgresql",
+          "choice": "postgresql",
           "displayName": "Postgresql"
         }
       ],
       "datatype": "choice",
-      "defaultValue": "SqlServer",
+      "defaultValue": "sqlserver",
       "description": "Database Provider"
     },
     "UseSqlServer": {
       "type": "computed",
-      "value": "(DBProvider == \"SqlServer\")"
+      "value": "(DbProvider == \"sqlserver\")"
     },
     "UsePostgresql": {
       "type": "computed",
-      "value": "(DBProvider == \"Postgresql\")"
+      "value": "(DbProvider == \"postgresql\")"
     },
     "AppYear": {
       "type": "generated",
